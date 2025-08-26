@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Тёмная тема с разделами</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+  body {
+    margin: 0;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'UnifrakturCook', cursive, serif; /* готический шрифт */
+    overflow-x: hidden;
+  }
+
+  header {
+    display: flex;
+    background-color: #111;
+    padding: 1rem 2rem;
+    user-select: none;
+  }
+
+  header div {
+    margin-right: 2rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  header div:hover, header div.active {
+    color: #ffae00;
+  }
+
+  /* Нижняя полоска на активном разделе */
+  header div.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #ffae00;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  main {
+    padding: 2rem;
+    min-height: 300px;
+    position: relative;
+  }
+
+  section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  section.active {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tab active" data-tab="home">Главная</div>
+  <div class="tab" data-tab="about">О нас</div>
+  <div class="tab" data-tab="contact">Контакты</div>
+</header>
+
+<main>
+  <section id="home" class="active">
+    <h1>Главная страница</h1>
+    <p>Добро пожаловать на наш сайт с тёмной темой и готическим шрифтом.</p>
+  </section>
+  <section id="about">
+    <h1>О нас</h1>
+    <p>Информация о компании или проекте.</p>
+  </section>
+  <section id="contact">
+    <h1>Контакты</h1>
+    <p>Свяжитесь с нами через форму или по телефону.</p>
+  </section>
+</main>
+
+<script>
+  const tabs = document.querySelectorAll('header .tab');
+  const sections = document.querySelectorAll('main section');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Активируем вкладку
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Показать соответствующий раздел с плавной сменой
+      const targetId = tab.getAttribute('data-tab');
+      sections.forEach(section => {
+        if (section.id === targetId) {
+          section.classList.add('active');
+        } else {
+          section.classList.remove('active');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
